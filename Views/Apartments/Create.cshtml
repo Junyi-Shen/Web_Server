@@ -1,0 +1,51 @@
+﻿@model FinalProjectJunyi.Models.Apartment
+
+@{
+    ViewBag.Title = "Add Apartment to " + ViewBag.BuildingName;
+}
+
+<h2>Add Apartment to @ViewBag.BuildingName</h2>
+
+<form action="@Url.Action("Create", "Apartments")" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="BuildingId" value="@ViewBag.BuildingId" />
+
+    <div class="form-group">
+        <label for="UnitNumber">Unit Number</label>
+        <input type="text" class="form-control" id="UnitNumber" name="UnitNumber" required />
+    </div>
+
+    <div class="form-group">
+        <label for="RentAmount">Rent Amount</label>
+        <input type="number" class="form-control" id="RentAmount" name="RentAmount" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Bedrooms">Bedrooms</label>
+        <input type="number" class="form-control" id="Bedrooms" name="Bedrooms" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Bathrooms">Bathrooms</label>
+        <input type="number" class="form-control" id="Bathrooms" name="Bathrooms" required />
+    </div>
+
+    <div class="form-group">
+        <label for="LivingRoom">Living Rooms</label>
+        <input type="number" class="form-control" id="LivingRoom" name="LivingRoom" required />
+    </div>
+
+    <div class="form-group">
+        <label for="SquareFootage">Square Footage</label>
+        <input type="number" class="form-control" id="SquareFootage" name="SquareFootage" required />
+    </div>
+
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="ElevatorAccess" name="ElevatorAccess" />
+        <label class="form-check-label" for="ElevatorAccess">Elevator Access</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Apartment</button>
+    <a href="@Url.Action("Apartments", "Buildings")" class="btn btn-secondary">Cancel</a>
+</form>

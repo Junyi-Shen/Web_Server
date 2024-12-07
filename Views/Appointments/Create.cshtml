@@ -1,0 +1,23 @@
+﻿@model FinalProjectJunyi.Models.Appointment
+
+@{
+    ViewBag.Title = "Set Appointment";
+}
+
+<h2>Set Appointment</h2>
+
+@using (Html.BeginForm("Create", "Appointments", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="AppointmentDate">Select Date and Time</label>
+        <input type="datetime-local" id="AppointmentDate" name="AppointmentDate" class="form-control" required />
+    </div>
+
+    @Html.HiddenFor(m => m.TenantId)
+    @Html.HiddenFor(m => m.ApartmentId)
+
+    <button type="submit" class="btn btn-primary">Set Appointment</button>
+    <a href="@Url.Action("Details", "Apartments", new { id = Model.ApartmentId })" class="btn btn-secondary">Cancel</a>
+}

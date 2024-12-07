@@ -1,0 +1,56 @@
+﻿@model FinalProjectJunyi.Models.Report
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Report</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PropertyManager.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PropertyManager.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PropertyOwner.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PropertyOwner.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportedAt)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

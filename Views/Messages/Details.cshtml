@@ -1,0 +1,50 @@
+﻿@model FinalProjectJunyi.Models.Message
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Receiver.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receiver.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sender.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sender.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SentAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SentAt)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MessageId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

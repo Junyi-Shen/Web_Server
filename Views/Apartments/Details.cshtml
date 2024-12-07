@@ -1,0 +1,69 @@
+﻿@model FinalProjectJunyi.Models.ApartmentDetailsViewModel
+
+@{
+    ViewBag.Title = "Apartment Details";
+}
+
+<div class="container mt-4">
+    <h2>Apartment Details</h2>
+    <hr />
+
+    <div class="row">
+        <!-- Image Section -->
+        <div class="col-md-6">
+            <img src="@Url.Content(Model.ImageURL)" alt="Building Image" class="img-fluid rounded" style="max-height: 400px; object-fit: cover;" />
+        </div>
+
+        <!-- Details Section -->
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Unit Number</th>
+                        <td>@Model.UnitNumber</td>
+                    </tr>
+                    <tr>
+                        <th>Building Name</th>
+                        <td>@Model.BuildingName</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <th>Rent Amount</th>
+                        <td>$@Model.RentAmount / month</td>
+                    </tr>
+                    <tr>
+                        <th>Bedrooms</th>
+                        <td>@Model.Bedrooms</td>
+                    </tr>
+                    <tr>
+                        <th>Bathrooms</th>
+                        <td>@Model.Bathrooms</td>
+                    </tr>
+                    <tr>
+                        <th>Living Rooms</th>
+                        <td>@Model.LivingRooms</td>
+                    </tr>
+                    <tr>
+                        <th>Square Footage</th>
+                        <td>@Model.SquareFootage sq ft</td>
+                    </tr>
+                    <tr>
+                        <th>Elevator Access</th>
+                        <td>@(Model.ElevatorAccess ? "Yes" : "No")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a href="@Url.Action("List", "Apartments")" class="btn btn-primary mt-3">
+        <i class="bi bi-arrow-left"></i> Back to Listings
+    </a>
+    <a href="@Url.Action("Create", "Appointments", new { apartmentId = Model.ApartmentId })" class="btn btn-success">
+        Set Appointment
+    </a>
+
+</div>

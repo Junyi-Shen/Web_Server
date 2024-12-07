@@ -1,0 +1,142 @@
+﻿@model List<FinalProjectJunyi.Models.BuildingViewModel>
+
+@{
+    ViewBag.Title = "Managed Buildings";
+}
+
+<h2 class="mt-4">Managed Buildings</h2>
+
+<!-- Add Building Button -->
+<div class="mb-4">
+    <a href="@Url.Action("Create", "Buildings")" class="btn btn-success btn-lg">
+        <i class="bi bi-building-add"></i> Add Building
+    </a>
+</div>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning text-center" role="alert">
+        <i class="bi bi-exclamation-circle"></i> You are not managing any buildings at the moment.
+    </div>
+}
+else
+{
+    foreach (var building in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">@building.BuildingName</h3>
+                <div>
+                    <a href="@Url.Action("Edit", "Buildings", new { id = building.BuildingId })" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil-square"></i> Edit Building
+                    </a>
+                    <form action="@Url.Action("DeleteBuilding", "Buildings")" method="post" style="display: inline;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="buildingId" value="@building.BuildingId" />
+                        <button class="btn btn-danger btn-sm" type="submit">
+                            <i class="bi bi-trash"></i> Delete Property
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <a href="@Url.Action("Create", "Apartments", new { buildingId = building.BuildingId })"
+                   class="btn btn-success mb-3">
+                    <i class="bi bi-plus-circle"></i> Add Apartment
+                </a>
+
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Unit Number</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (building.Apartments != null && building.Apartments.Any())
+                        {
+                            foreach (var apartment in building.Apartments)
+                            {
+                                <tr>
+                                    <td>@apartment.UnitNumber</td>
+
+                                    <td>
+                                        <select class="form-select status-dropdown" data-apartment-id="@apartment.ApartmentId">
+                                            @foreach (var status in apartment.StatusOptions)
+                                            {
+                                                <option value="@status" @(status == apartment.CurrentStatus ? "selected" : "")>
+                                                    @status
+                                                </option>
+                                            }
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        <div class="btn-group" role="group">
+
+                                            <button class="btn btn-warning btn-sm">
+                                                <i class="bi bi-flag"></i> Report Issue
+                                            </button>
+
+                                            <a href="@Url.Action("Edit", "Apartments", new { id = apartment.ApartmentId })" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </a>
+
+                                            <form action="@Url.Action("DeleteApartment", "Apartments")" method="post" style="margin: 0;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="apartmentId" value="@apartment.ApartmentId" />
+                                                <button class="btn btn-danger btn-sm" type="submit">
+                                                    <i class="bi bi-trash"></i> Remove Unit
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No apartments found for this building.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle status dropdown change
+            $(".status-dropdown").change(function () {
+                var apartmentId = $(this).data("apartment-id");
+                var newStatus = $(this).val();
+
+                // Send AJAX request to update status
+                $.ajax({
+                    url: '@Url.Action("UpdateApartmentStatus", "Buildings")',
+                    type: 'POST',
+                    data: { apartmentId: apartmentId, newStatus: newStatus },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message); // Notify user
+                        } else {
+                            alert("Error: " + response.message); // Show error
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while updating the status.");
+                    }
+                });
+            });
+        });
+    </script>
+}

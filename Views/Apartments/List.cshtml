@@ -1,0 +1,111 @@
+﻿@model FinalProjectJunyi.Models.ApartmentFilterViewModel
+
+@{
+    ViewBag.Title = "Apartment Listings";
+}
+
+<div class="row">
+    <!-- Filters on the Left -->
+    <div class="col-md-3">
+        <h4>Filters</h4>
+        @using (Html.BeginForm("List", "Apartments", FormMethod.Get))
+        {
+            <!-- Bedrooms -->
+            <div class="form-group">
+                <label>Bedrooms</label>
+                <div class="d-flex">
+                    <input type="number" id="MinBedrooms" name="MinBedrooms" class="form-control" placeholder="Min" value="@Model.MinBedrooms" style="width: 48%; margin-right: 4%;" />
+                    <input type="number" id="MaxBedrooms" name="MaxBedrooms" class="form-control" placeholder="Max" value="@Model.MaxBedrooms" style="width: 48%;" />
+                </div>
+            </div>
+
+            <!-- Bathrooms -->
+            <div class="form-group">
+                <label>Bathrooms</label>
+                <div class="d-flex">
+                    <input type="number" id="MinBathrooms" name="MinBathrooms" class="form-control" placeholder="Min" value="@Model.MinBathrooms" style="width: 48%; margin-right: 4%;" />
+                    <input type="number" id="MaxBathrooms" name="MaxBathrooms" class="form-control" placeholder="Max" value="@Model.MaxBathrooms" style="width: 48%;" />
+                </div>
+            </div>
+
+            <!-- Living Rooms -->
+            <div class="form-group">
+                <label>Living Rooms</label>
+                <div class="d-flex">
+                    <input type="number" id="MinLivingRooms" name="MinLivingRooms" class="form-control" placeholder="Min" value="@Model.MinLivingRooms" style="width: 48%; margin-right: 4%;" />
+                    <input type="number" id="MaxLivingRooms" name="MaxLivingRooms" class="form-control" placeholder="Max" value="@Model.MaxLivingRooms" style="width: 48%;" />
+                </div>
+            </div>
+
+            <!-- Square Footage -->
+            <div class="form-group">
+                <label>Square Footage</label>
+                <div class="d-flex">
+                    <input type="number" id="MinSquareFootage" name="MinSquareFootage" class="form-control" placeholder="Min" value="@Model.MinSquareFootage" style="width: 48%; margin-right: 4%;" />
+                    <input type="number" id="MaxSquareFootage" name="MaxSquareFootage" class="form-control" placeholder="Max" value="@Model.MaxSquareFootage" style="width: 48%;" />
+                </div>
+            </div>
+
+            <!-- Rent Amount -->
+            <div class="form-group">
+                <label>Rent Amount</label>
+                <div class="d-flex">
+                    <input type="number" id="MinRent" name="MinRent" class="form-control" placeholder="Min" value="@Model.MinRent" style="width: 48%; margin-right: 4%;" />
+                    <input type="number" id="MaxRent" name="MaxRent" class="form-control" placeholder="Max" value="@Model.MaxRent" style="width: 48%;" />
+                </div>
+            </div>
+
+            <!-- Elevator Access -->
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="ElevatorAccess" name="ElevatorAccess" @(Model.ElevatorAccess == true ? "checked" : "") />
+                    Elevator Access
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        }
+    </div>
+
+    <!-- Apartment Listings on the Right -->
+    <div class="col-md-9">
+        @if (Model.Apartments != null && Model.Apartments.Any())
+        {
+            <div class="row">
+                @foreach (var apartment in Model.Apartments)
+                {
+                    <div class="col-md-4">
+                        <div class="card" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <img src="@(string.IsNullOrEmpty(apartment.ImageURL) ? Url.Content("~/Content/Images/Buildings/placeholder.png") : apartment.ImageURL)"
+                                 alt="Building Image"
+                                 style="width: 100%; height: 200px; object-fit: contain;" />
+
+                            <div class="card-body">
+                                <h5>@apartment.UnitNumber</h5>
+                                <p>@apartment.BuildingAddress</p>
+                                <p>@apartment.RentAmount</p>
+                            </div>
+
+                            <div class="card-footer text-right">
+                                <a href="@Url.Action("Details", "Apartments", new { id = apartment.ApartmentId })" class="btn btn-secondary">
+                                    See Details
+                                </a>
+                                <a href="@Url.Action("Create", "Appointments", new { apartmentId = apartment.ApartmentId })" class="btn btn-primary">
+                                    Set Appointment
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div style="color: grey; text-align: center; padding: 50px;">
+                <h4>No apartments found with the chosen filters</h4>
+            </div>
+        }
+    </div>
+</div>

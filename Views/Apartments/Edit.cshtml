@@ -1,0 +1,64 @@
+﻿@model FinalProjectJunyi.Models.Apartment
+
+@{
+    ViewBag.Title = "Edit Apartment";
+}
+
+<h2>Edit Apartment</h2>
+
+<form action="@Url.Action("Edit", "Apartments")" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="ApartmentId" value="@Model.ApartmentId" />
+    <input type="hidden" name="BuildingId" value="@Model.BuildingId" />
+
+    <div class="form-group">
+        <label for="UnitNumber">Unit Number</label>
+        <input type="text" class="form-control" id="UnitNumber" name="UnitNumber" value="@Model.UnitNumber" required />
+    </div>
+
+    <div class="form-group">
+        <label for="RentAmount">Rent Amount</label>
+        <input type="number" class="form-control" id="RentAmount" name="RentAmount" value="@Model.RentAmount" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Bedrooms">Bedrooms</label>
+        <input type="number" class="form-control" id="Bedrooms" name="Bedrooms" value="@Model.Bedrooms" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Bathrooms">Bathrooms</label>
+        <input type="number" class="form-control" id="Bathrooms" name="Bathrooms" value="@Model.Bathrooms" required />
+    </div>
+
+    <div class="form-group">
+        <label for="LivingRoom">Living Room</label>
+        <input type="number" class="form-control" id="LivingRoom" name="LivingRoom" value="@Model.LivingRoom" required />
+    </div>
+
+    <div class="form-group">
+        <label for="SquareFootage">Square Footage</label>
+        <input type="number" class="form-control" id="SquareFootage" name="SquareFootage" value="@Model.SquareFootage" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ElevatorAccess">
+            <input type="checkbox" id="ElevatorAccess" name="ElevatorAccess" @(Model.ElevatorAccess ? "checked" : "") />
+            Elevator Access
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label for="Status">Status</label>
+        <select class="form-control" id="Status" name="Status">
+            <option value="Available" @(Model.Status == "Available" ? "selected" : "")>Available</option>
+            <option value="Occupied" @(Model.Status == "Occupied" ? "selected" : "")>Occupied</option>
+            <option value="Maintenance" @(Model.Status == "Maintenance" ? "selected" : "")>Maintenance</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="@Url.Action("Apartments", "Buildings")" class="btn btn-secondary">Cancel</a>
+</form>
+
